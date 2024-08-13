@@ -1,0 +1,8 @@
+<nav class="sidebar d-flex flex-column p-3 bg-dark">
+    @for (item of items(); track item) {
+    <div class="sidebar-item">
+        <span class="material-icons">{{item.icon}}</span>
+        <span class="sidebar-text d-none d-md-inline">{{item.text}}</span>
+    </div>
+    }
+</nav>

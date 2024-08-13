@@ -3,3 +3,8 @@ export interface IUserAuthenticationResult {
     errorMessage: string;
     authenticatedUser: any;
 }
+
+export interface ISidebarItem {
+    icon: string;
+    text: string;
+}
