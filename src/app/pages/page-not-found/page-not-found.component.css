@@ -1,0 +1,35 @@
+.page-not-found-message {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.page-not-found-message h2 {
+    text-align: center;
+}
+
+.page-not-found-message h3 {
+    text-align: center;
+}
+
+.page-not-found-message div {
+    text-align: center;
+}
+
+.page-not-found-message a {
+    text-align: center;
+    color: #0aadc9;
+}
+
+.page-not-found-message a:hover {
+    text-decoration: underline;
+    color: red;
+}
+
+.page-not-found-go-home {
+    position: relative;
+    top: 150px;
+    cursor: pointer;
+}
