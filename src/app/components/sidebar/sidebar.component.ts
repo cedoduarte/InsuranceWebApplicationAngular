@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { ISidebarItem } from '../../shared/interfaces';
 
 @Component({
@@ -10,4 +10,9 @@ import { ISidebarItem } from '../../shared/interfaces';
 })
 export class SidebarComponent {
   items = input<ISidebarItem[]>([]);
+  itemClicked = output<ISidebarItem>();
+
+  handleClick($event: any) {
+    this.itemClicked.emit($event);
+  }
 }

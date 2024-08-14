@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { AppToasterService } from '../../services/app-toaster.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +16,7 @@ export class LoginComponent {
   password: string = "";
   authenticateService = inject(AuthenticationService);
   router = inject(Router);
-  toaster = inject(ToastrService);
+  toaster = inject(AppToasterService);
 
   handleSubmit() {
     this.authenticateService.authenticate(this.email, this.password)
@@ -25,10 +25,14 @@ export class LoginComponent {
         localStorage.setItem("authenticatedUser", JSON.stringify(responseData.authenticatedUser));
         this.router.navigate(["/home"]);
       } else {
-        this.toaster.error("Invalid credentials");
+        this.toaster.critical("Invalid credentials");
       }
     }, errorData => {
-      this.toaster.error(errorData.error);
+      this.toaster.critical(errorData.error);
     });
+  }
+
+  handleGoSignUpClicked() {
+    this.router.navigate(["/signup"]);
   }
 }

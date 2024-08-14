@@ -1,4 +1,4 @@
-.login-form {
+.signup-form {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -7,31 +7,31 @@
     text-align: center;
 }
 
-.login-button {
+.signup-button {
     position: relative;
     top: 10px;
 }
 
-.login-go-signup {
+.signup-go-login {
     cursor: pointer;
     color: #0aadc9;
     position: relative;
     top: 50px;
 }
 
-.login-go-signup:hover {
+.signup-go-login:hover {
     color: red;
     text-decoration: underline;        
 }
 
 @media only screen and (min-width: 768px) {
-    .login-form {
+    .signup-form {
         width: 45vw;
     }
 }
 
 @media only screen and (min-width: 1000px) {
-    .login-form {
+    .signup-form {
         width: 20vw;
     }
 }

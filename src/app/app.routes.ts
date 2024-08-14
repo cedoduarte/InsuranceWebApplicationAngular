@@ -6,11 +6,16 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
 import { UsersComponent } from './pages/users/users.component';
 import { CarsComponent } from './pages/cars/cars.component';
 import { InsurancesComponent } from './pages/insurances/insurances.component';
+import { SignupComponent } from './auth/signup/signup.component';
 
 export const routes: Routes = [    
     {
         path: "",
         component: LoginComponent
+    },
+    {
+        path: "signup",
+        component: SignupComponent
     },
     {
         path: "home",

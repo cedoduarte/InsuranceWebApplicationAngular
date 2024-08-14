@@ -30,4 +30,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.router.navigate(["home/users"]);
   }
+
+  handleItemClicked($event: any) {
+    const componentName: string = $event.text.toLowerCase();
+    this.router.navigate([`home/${componentName}`]);
+  }
 }
