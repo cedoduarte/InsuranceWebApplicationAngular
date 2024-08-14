@@ -3,13 +3,13 @@
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">person</span>
         </span>
-        <input [(ngModel)]="email" name="email" type="text" class="form-control" placeholder="Email" />
+        <input [(ngModel)]="formGroup.email" name="email" type="text" class="form-control" placeholder="Email" />
     </div>
     <div class="input-group flex-nowrap">
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">key</span>
         </span>
-        <input [(ngModel)]="password" name="password" type="password" class="form-control" placeholder="Password" />
+        <input [(ngModel)]="formGroup.password" name="password" type="password" class="form-control" placeholder="Password" />
     </div>
     <button class="login-button btn btn-primary" type="submit">Login</button>
     <div class="login-go-signup" (click)="handleGoSignUpClicked()">Sign Up</div>

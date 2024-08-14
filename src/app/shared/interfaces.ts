@@ -15,6 +15,19 @@ export interface IUserViewModel {
     lastCreated: string;
 }
 
+export interface IAuthenticateUserCommand {
+    email: string;
+    password: string;
+}
+
+export interface ICreateUserCommand {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmedPassword: string;
+}
+
 export interface ISidebarItem {
     icon: string;
     text: string;

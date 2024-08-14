@@ -3,31 +3,31 @@
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">badge</span>
         </span>
-        <input [(ngModel)]="firstName" name="firstName" type="text" class="form-control" placeholder="First name" />
+        <input [(ngModel)]="formGroup.firstName" name="firstName" type="text" class="form-control" placeholder="First name" />
     </div>
     <div class="input-group flex-nowrap">
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">badge</span>
         </span>
-        <input [(ngModel)]="lastName" name="lastName" type="text" class="form-control" placeholder="Last name" />
+        <input [(ngModel)]="formGroup.lastName" name="lastName" type="text" class="form-control" placeholder="Last name" />
     </div>
     <div class="input-group flex-nowrap">
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">mail</span>
         </span>
-        <input [(ngModel)]="email" name="email" type="text" class="form-control" placeholder="Email" />
+        <input [(ngModel)]="formGroup.email" name="email" type="text" class="form-control" placeholder="Email" />
     </div>
     <div class="input-group flex-nowrap">
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">key</span>
         </span>
-        <input [(ngModel)]="password" name="password" type="password" class="form-control" placeholder="Password" />
+        <input [(ngModel)]="formGroup.password" name="password" type="password" class="form-control" placeholder="Password" />
     </div>
     <div class="input-group flex-nowrap">
         <span class="input-group-text" id="addon-wrapping">
             <span class="material-icons">key</span>
         </span>
-        <input [(ngModel)]="confirmedPassword" name="confirmedPassword" type="password" class="form-control" placeholder="Confirmed password" />
+        <input [(ngModel)]="formGroup.confirmedPassword" name="confirmedPassword" type="password" class="form-control" placeholder="Confirmed password" />
     </div>
     <button class="signup-button btn btn-primary" type="submit">Sign Up</button>
     <div class="signup-go-login" (click)="handleGoLoginClicked()">Go Login</div>
