@@ -4,6 +4,11 @@ export interface IUserAuthenticationResult {
     authenticatedUser: any;
 }
 
+export interface IUserListResult {
+    totalCount: number;
+    userList: IUserViewModel[];
+}
+
 export interface IUserViewModel {
     id: number;
     firstName: string;
@@ -28,7 +33,26 @@ export interface ICreateUserCommand {
     confirmedPassword: string;
 }
 
+export interface IUpdateUserCommand {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+}
+
+export interface IGetUserListQuery {
+    keyword: string;
+    getAll: boolean;
+    pageNumber: number;
+    pageSize: number;
+}
+
 export interface ISidebarItem {
     icon: string;
+    text: string;
+}
+
+export interface ICrudNavItem {
     text: string;
 }

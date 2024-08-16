@@ -1,0 +1,12 @@
+<nav>
+    <ul class="pagination">
+        <li class="pagination-item page-item page-link" (click)="handlePreviousClick()">Previous</li>
+        @for (pageNumber of numberList(); track pageNumber) {
+        <li 
+            [ngClass]="{'active': pageNumber === currentPage()}"
+            class="pagination-item page-item page-link"
+            (click)="handlePageClick(pageNumber)">{{pageNumber}}</li>
+        }
+        <li class="pagination-item page-item page-link" (click)="handleNextClick()">Next</li>
+    </ul>
+</nav>

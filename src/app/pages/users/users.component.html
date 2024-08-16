@@ -1,3 +1,2 @@
-<div class="users-container">
-    hola
-</div>
+<app-crud-nav class="users-crud-nav" [items]="items" (itemClicked)="handleItemClicked($event)"></app-crud-nav>
+<router-outlet></router-outlet>

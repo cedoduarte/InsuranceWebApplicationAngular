@@ -8,12 +8,13 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
     router = inject(Router);
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)
+        : Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
+    {
         let authenticatedUser = JSON.parse(localStorage.getItem("authenticatedUser")!);
         if (authenticatedUser) {
             return true;
-        }
-        else {
+        } else {
             this.router.navigate(['/']);
             return false;
         }

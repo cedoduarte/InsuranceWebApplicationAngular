@@ -1,0 +1,42 @@
+.user-read-form {
+    position: relative;
+    left: 10px;
+}
+
+.user-read-search-button {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    top: -2px;
+    left: 5px;
+    width: 100px;
+    height: 30px;
+}
+
+.user-read-table {
+    position: relative;
+    top: 20px;
+}
+
+.user-read-pagination {
+    position: relative;
+    top: 10px;
+}
+
+.user-read-actions {
+    display: flex;
+}
+
+.user-read-command-button {
+    display: block;
+    cursor: pointer;
+    width: 25px;
+}
+
+.user-read-command-button:hover {
+    background-color: #0d6efd;
+    display: block;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}

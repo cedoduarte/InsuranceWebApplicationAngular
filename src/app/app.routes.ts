@@ -7,6 +7,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { CarsComponent } from './pages/cars/cars.component';
 import { InsurancesComponent } from './pages/insurances/insurances.component';
 import { SignupComponent } from './auth/signup/signup.component';
+import { UserReadComponent } from './pages/users/crud/user-read/user-read.component';
 
 export const routes: Routes = [    
     {
@@ -24,7 +25,13 @@ export const routes: Routes = [
         children: [
             {
                 path: "users",
-                component: UsersComponent
+                component: UsersComponent,
+                children: [
+                    {
+                        path: "user-read",
+                        component: UserReadComponent
+                    }
+                ]
             },
             {
                 path: "cars",

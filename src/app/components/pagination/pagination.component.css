@@ -1,0 +1,4 @@
+.pagination-item:hover {
+    cursor: pointer;
+    user-select: none;
+}

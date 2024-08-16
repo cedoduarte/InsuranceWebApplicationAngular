@@ -1,0 +1,5 @@
+<ul class="nav justify-content-center">
+    @for (item of items(); track item) {
+    <li class="insurance-app-link nav-link" (click)="handleClick(item)">{{item.text}}</li>
+    }
+</ul>

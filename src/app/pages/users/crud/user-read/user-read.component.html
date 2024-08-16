@@ -1,0 +1,45 @@
+<table class="user-read-table table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of items(); track item) {
+        <tr>
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.firstName}}</td>
+            <td>{{item.lastName}}</td>
+            <td>{{item.email}}</td>
+            <td class="user-read-actions">
+                <span class="user-read-command-button material-icons" (click)="handleEditClick(item.id)">edit</span>|
+                <span class="user-read-command-button material-icons" (click)="handleDeleteClick(item.id)">delete</span>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<app-pagination class="user-read-pagination" [pageCount]="pageCount()"
+    (pageClicked)="handlePageClick($event)"></app-pagination>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #modal>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm Action</h5>
+            </div>
+            <div class="modal-body">
+                <h4>{{actionName}}</h4>
+                Are you sure you want to proceed?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="handleCancelClick()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="handleConfirmClick()">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
