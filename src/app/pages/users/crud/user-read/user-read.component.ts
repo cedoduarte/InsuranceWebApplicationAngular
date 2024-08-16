@@ -1,9 +1,10 @@
-import { Component, computed, inject, signal, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, computed, inject, signal, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../../services/user-service';
 import { IGetUserListQuery, IUserViewModel } from '../../../../shared/interfaces';
 import { AppToasterService } from '../../../../services/app-toaster.service';
 import { PaginationComponent } from '../../../../components/pagination/pagination.component';
 import { UserRecordAction } from '../../../../shared/enums';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-user-read',
@@ -12,19 +13,22 @@ import { UserRecordAction } from '../../../../shared/enums';
   templateUrl: './user-read.component.html',
   styleUrl: './user-read.component.css'
 })
-export class UserReadComponent implements OnInit, AfterViewInit {
+export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("modal") modal!: ElementRef;
   modalInstance: any;
+  userAction!: UserRecordAction;
+  actionName: string = "";
+  selectedUserId: number = -1;
+
   userService = inject(UserService);
+  destroy$ = new Subject<void>();
   toaster = inject(AppToasterService);
   pageSize = signal<number>(10);
   pageNumber = signal<number>(1);
   totalCount = signal<number>(0);
   pageCount = computed(() => Math.ceil(this.totalCount() / this.pageSize()));
   items = signal<IUserViewModel[]>([]);
-  userAction!: UserRecordAction;
-  actionName: string = "";
-  selectedUserId: number = -1;
+  
 
   ngOnInit() {
     this.requestUserList();
@@ -32,6 +36,11 @@ export class UserReadComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.initializeModal();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   initializeModal() {
@@ -47,7 +56,8 @@ export class UserReadComponent implements OnInit, AfterViewInit {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize()
     };
-    this.userService.getUserList(query).subscribe(
+    this.userService.getUserList(query).pipe(takeUntil(this.destroy$))
+    .subscribe(
       responseData => {
         this.totalCount.set(responseData.totalCount);
         this.items.set(responseData.userList);
