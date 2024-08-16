@@ -15,9 +15,6 @@ export class UsersComponent {
   items: ICrudNavItem[] = [
     {
       text: "Read"
-    },
-    {
-      text: "Statistics"
     }
   ];
 

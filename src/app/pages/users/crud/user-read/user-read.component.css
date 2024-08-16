@@ -1,26 +1,14 @@
-.user-read-form {
-    position: relative;
-    left: 10px;
-}
-
-.user-read-search-button {
-    position: relative;
-    padding: 0;
-    margin: 0;
-    top: -2px;
-    left: 5px;
-    width: 100px;
-    height: 30px;
-}
-
 .user-read-table {
     position: relative;
     top: 20px;
+    margin-left: 10px;
+    width: 95%;
 }
 
 .user-read-pagination {
     position: relative;
     top: 10px;
+    margin-left: 10px;
 }
 
 .user-read-actions {
@@ -39,4 +27,27 @@
     color: white;
     text-decoration: none;
     border-radius: 5px;
+}
+
+.user-read-download-button {
+    position: relative;
+    margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .user-read-table {
+        width: 5vw;
+    }
+}
+
+@media (min-width: 769px) {
+    .user-read-table {
+        width: 70vw;
+    }
+}
+
+@media (min-width: 1000px) {
+    .user-read-table {
+        width: 80vw;
+    }
 }
