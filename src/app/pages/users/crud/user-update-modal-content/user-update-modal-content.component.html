@@ -1,0 +1,23 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Action</h5>
+    </div>
+    <div class="modal-body">
+        <h4>Update User with ID {{user()?.id}}</h4>
+        <form class="user-update-modal-content-form">
+            <input [(ngModel)]="formData.firstName" name="firstName" type="text" class="form-control"
+                placeholder="First name" />
+            <input [(ngModel)]="formData.lastName" name="lastName" type="text" class="form-control"
+                placeholder="Last name" />
+            <input [(ngModel)]="formData.email" name="email" type="email" class="form-control" placeholder="Email" />
+            <input [(ngModel)]="formData.password" name="password" type="password" class="form-control"
+                placeholder="Password" />
+            <input [(ngModel)]="formData.confirmedPassword" name="password" type="password" class="form-control"
+                placeholder="Confirmed password" />
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="handleCancelClick()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="handleConfirmClick()">Confirm</button>
+    </div>
+</div>

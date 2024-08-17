@@ -39,6 +39,7 @@ export interface IUpdateUserCommand {
     lastName: string;
     email: string;
     password: string;
+    confirmedPassword: string;
 }
 
 export interface IGetUserListQuery {

@@ -1,0 +1,13 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Action</h5>
+    </div>
+    <div class="modal-body">
+        <h4>{{actionName()}}</h4>
+        Are you sure you want to proceed?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="handleCancelClick()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="handleConfirmClick()">Confirm</button>
+    </div>
+</div>

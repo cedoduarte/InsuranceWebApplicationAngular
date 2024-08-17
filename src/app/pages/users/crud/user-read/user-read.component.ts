@@ -5,20 +5,26 @@ import { AppToasterService } from '../../../../services/app-toaster.service';
 import { PaginationComponent } from '../../../../components/pagination/pagination.component';
 import { UserRecordAction } from '../../../../shared/enums';
 import { Subject, takeUntil } from 'rxjs';
+import { QuestionModalContentComponent } from '../../../../components/question-modal-content/question-modal-content.component';
+import { UserUpdateModalContentComponent } from '../user-update-modal-content/user-update-modal-content.component';
 
 @Component({
   selector: 'app-user-read',
   standalone: true,
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, QuestionModalContentComponent, UserUpdateModalContentComponent],
   templateUrl: './user-read.component.html',
   styleUrl: './user-read.component.css'
 })
 export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild("modal") modal!: ElementRef;
-  modalInstance: any;
+  @ViewChild("updateOrDeleteModal") updateOrDeleteModal!: ElementRef;
+  @ViewChild("updateModal") updateModal!: ElementRef;
+  @ViewChild("updateModalContent") updateModalContent!: UserUpdateModalContentComponent;
+  updateOrDeleteModalInstance: any;
+  updateModalInstance: any;
   userAction!: UserRecordAction;
   actionName: string = "";
   selectedUserId: number = -1;
+  selectedUser!: IUserViewModel;
 
   userService = inject(UserService);
   destroy$ = new Subject<void>();
@@ -27,15 +33,15 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   pageNumber = signal<number>(1);
   totalCount = signal<number>(0);
   pageCount = computed(() => Math.ceil(this.totalCount() / this.pageSize()));
-  items = signal<IUserViewModel[]>([]);
-  
+  items = signal<IUserViewModel[]>([]);  
 
   ngOnInit() {
     this.requestUserList();
   }
 
   ngAfterViewInit() {
-    this.initializeModal();
+    this.initializeUpdateOrDeleteModal();
+    this.initializeUpdateModal();
   }
 
   ngOnDestroy() {
@@ -43,10 +49,16 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  initializeModal() {
-    const modalElement = this.modal.nativeElement;
-    const bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
-    this.modalInstance = bootstrapModal;
+  initializeUpdateOrDeleteModal() {
+    let modalElement = this.updateOrDeleteModal.nativeElement;
+    let bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
+    this.updateOrDeleteModalInstance = bootstrapModal;
+  }
+
+  initializeUpdateModal() {
+    let modalElement = this.updateModal.nativeElement;
+    let bootstrapModal = new (window as any).bootstrap.Modal(modalElement);
+    this.updateModalInstance = bootstrapModal;
   }
 
   requestUserList() {
@@ -72,32 +84,59 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleEditClick($event: any) {
-    this.selectedUserId = $event;
+    this.selectedUser = $event;
+    this.selectedUserId = this.selectedUser.id;
     this.actionName = `Update user with ID ${this.selectedUserId}`;
     this.userAction = UserRecordAction.UpdateClick;
-    this.modalInstance.show();
+    this.updateOrDeleteModalInstance.show();
   }
 
   handleDeleteClick($event: any) {
     this.selectedUserId = $event;
     this.actionName = `Delete user with ID ${this.selectedUserId}`;
     this.userAction = UserRecordAction.DeleteClick;
-    this.modalInstance.show();
+    this.updateOrDeleteModalInstance.show();
   }
 
-  handleCancelClick() {
-    this.modalInstance.hide();
+  handleUpdateOrDeleteCancelClick() {
+    this.updateOrDeleteModalInstance.hide();
   }
 
-  handleConfirmClick() {
-    this.modalInstance.hide();
+  handleUpdateOrDeleteConfirmClick() {
+    this.updateOrDeleteModalInstance.hide();
     switch (this.userAction) {
       case UserRecordAction.DeleteClick:
-        alert(`delete user with id ${this.selectedUserId}`);
+        this.requestDeleteUser();
         break;
       case UserRecordAction.UpdateClick:
-        alert(`update user with id ${this.selectedUserId}`);
+        this.updateModalInstance.show();
+        this.updateModalContent.load();
         break;
     }
+  }
+
+  requestDeleteUser() {
+    this.userService.deleteUser(this.selectedUserId).pipe(takeUntil(this.destroy$))
+    .subscribe(responseData => {
+        this.requestUserList();
+        this.toaster.critical("User deleted successfully");
+      }, errorData => {
+        this.toaster.critical(errorData.error);
+      });
+  }
+
+  handleUpdateConfirmClick($event: any) {
+    this.userService.updateUser($event).pipe(takeUntil(this.destroy$))
+    .subscribe(responseData => {
+        this.requestUserList();
+        this.toaster.success("User updated successfully");
+      }, errorData => {
+        this.toaster.critical(errorData.error);
+      });
+      this.updateModalInstance.hide();
+  }
+
+  handleUpdateCancelClick() {
+    this.updateModalInstance.hide();
   }
 }

@@ -16,7 +16,7 @@
             <td>{{item.lastName}}</td>
             <td>{{item.email}}</td>
             <td class="user-read-actions">
-                <span class="user-read-command-button material-icons" (click)="handleEditClick(item.id)">edit</span>|
+                <span class="user-read-command-button material-icons" (click)="handleEditClick(item)">edit</span>|
                 <span class="user-read-command-button material-icons" (click)="handleDeleteClick(item.id)">delete</span>
             </td>
         </tr>
@@ -24,26 +24,22 @@
     </tbody>
 </table>
 <div class="user-read-pagination">
-    <app-pagination [pageCount]="pageCount()"
-        (pageClicked)="handlePageClick($event)"></app-pagination>
+    <app-pagination [pageCount]="pageCount()" (pageClicked)="handlePageClick($event)"></app-pagination>
 </div>
 
 <button class="user-read-download-button btn btn-success">Download Excel file</button>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #modal>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #updateOrDeleteModal>
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirm Action</h5>
-            </div>
-            <div class="modal-body">
-                <h4>{{actionName}}</h4>
-                Are you sure you want to proceed?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="handleCancelClick()">Cancel</button>
-                <button type="button" class="btn btn-primary" (click)="handleConfirmClick()">Confirm</button>
-            </div>
-        </div>
+        <app-question-modal-content [actionName]="actionName" (confirmClick)="handleUpdateOrDeleteConfirmClick()"
+            (cancelClick)="handleUpdateOrDeleteCancelClick()"></app-question-modal-content>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" #updateModal>
+    <div class="modal-dialog" role="document">
+        <app-user-update-modal-content #updateModalContent [user]="selectedUser"
+            (confirmClick)="handleUpdateConfirmClick($event)"
+            (cancelClick)="handleUpdateCancelClick()"></app-user-update-modal-content>
     </div>
 </div>
