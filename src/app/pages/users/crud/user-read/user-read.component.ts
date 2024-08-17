@@ -27,6 +27,14 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedUser!: IUserViewModel;
 
   userService = inject(UserService);
+  query = computed<IGetUserListQuery | null>(() => {
+    return {
+      keyword: "",
+      getAll: true,
+      pageNumber: this.pageNumber(),
+      pageSize: this.pageSize()
+    }
+  });
   destroy$ = new Subject<void>();
   toaster = inject(AppToasterService);
   pageSize = signal<number>(10);
@@ -62,13 +70,7 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   requestUserList() {
-    const query: IGetUserListQuery = {
-      keyword: "",
-      getAll: true,
-      pageNumber: this.pageNumber(),
-      pageSize: this.pageSize()
-    };
-    this.userService.getUserList(query).pipe(takeUntil(this.destroy$))
+    this.userService.getUserList(this.query()!).pipe(takeUntil(this.destroy$))
     .subscribe(
       responseData => {
         this.totalCount.set(responseData.totalCount);
@@ -138,5 +140,16 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   handleUpdateCancelClick() {
     this.updateModalInstance.hide();
+  }
+
+  handleDownloadFile() {
+    this.userService.getUserExcelFile(this.query()!).subscribe(response => {
+      const fileName = "users.xlsx";
+      const blob: Blob = response.body as Blob;
+      let a = document.createElement("a");
+      a.download = fileName!;
+      a.href = window.URL.createObjectURL(blob);
+      a.click();
+    });
   }
 }
