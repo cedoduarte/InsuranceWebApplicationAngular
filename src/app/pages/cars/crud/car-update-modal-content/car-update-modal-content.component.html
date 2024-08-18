@@ -1,0 +1,21 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Action</h5>
+    </div>
+    <div class="modal-body">
+        <h4>Update Car with ID {{car()?.id}}</h4>
+        <form class="car-update-modal-content-form">
+            <input [(ngModel)]="formData.model" name="model" type="text" class="form-control"
+                placeholder="Model" />
+            <input [(ngModel)]="formData.color" name="color" type="text" class="form-control"
+                placeholder="Color" />
+            <input [(ngModel)]="formData.price" name="price" type="number" class="form-control" placeholder="Price" />
+            <input [(ngModel)]="formData.plateNumber" name="plateNumber" type="text" class="form-control"
+                placeholder="Plate number" />
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="handleCancelClick()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="handleConfirmClick()">Confirm</button>
+    </div>
+</div>

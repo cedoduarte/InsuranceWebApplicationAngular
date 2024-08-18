@@ -1,21 +1,22 @@
-import { Component, computed, inject, signal, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { UserService } from '../../../../services/user-service';
-import { IGetEntityListQuery, IUserViewModel } from '../../../../shared/interfaces';
-import { AppToasterService } from '../../../../services/app-toaster.service';
+import { AfterViewInit, Component, computed, ElementRef, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { PaginationComponent } from '../../../../components/pagination/pagination.component';
-import { RecordAction } from '../../../../shared/enums';
-import { Subject, takeUntil } from 'rxjs';
 import { QuestionModalContentComponent } from '../../../../components/question-modal-content/question-modal-content.component';
-import { UserUpdateModalContentComponent } from '../user-update-modal-content/user-update-modal-content.component';
+import { Subject, takeUntil } from 'rxjs';
+import { AppToasterService } from '../../../../services/app-toaster.service';
+import { ICarViewModel, IGetEntityListQuery } from '../../../../shared/interfaces';
+import { CarService } from '../../../../services/car.service';
+import { RecordAction } from '../../../../shared/enums';
+import { CarUpdateModalContentComponent } from '../car-update-modal-content/car-update-modal-content.component';
+import { UserUpdateModalContentComponent } from '../../../users/crud/user-update-modal-content/user-update-modal-content.component';
 
 @Component({
-  selector: 'app-user-read',
+  selector: 'app-car-read',
   standalone: true,
-  imports: [PaginationComponent, QuestionModalContentComponent, UserUpdateModalContentComponent],
-  templateUrl: './user-read.component.html',
-  styleUrl: './user-read.component.css'
+  imports: [PaginationComponent, QuestionModalContentComponent, CarUpdateModalContentComponent],
+  templateUrl: './car-read.component.html',
+  styleUrl: './car-read.component.css'
 })
-export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("updateOrDeleteModal") updateOrDeleteModal!: ElementRef;
   @ViewChild("updateModal") updateModal!: ElementRef;
   @ViewChild("updateModalContent") updateModalContent!: UserUpdateModalContentComponent;
@@ -23,10 +24,10 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   updateModalInstance: any;
   userAction!: RecordAction;
   actionName: string = "";
-  selectedUserId: number = -1;
-  selectedUser!: IUserViewModel;
+  selectedCarId: number = -1;
+  selectedCar!: ICarViewModel;
 
-  userService = inject(UserService);
+  carService = inject(CarService);
   query = computed<IGetEntityListQuery | null>(() => {
     return {
       keyword: "",
@@ -41,10 +42,10 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   pageNumber = signal<number>(1);
   totalCount = signal<number>(0);
   pageCount = computed(() => Math.ceil(this.totalCount() / this.pageSize()));
-  items = signal<IUserViewModel[]>([]);
+  items = signal<ICarViewModel[]>([]);
 
   ngOnInit() {
-    this.requestUserList();
+    this.requestCarList();
   }
 
   ngAfterViewInit() {
@@ -69,12 +70,12 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateModalInstance = bootstrapModal;
   }
 
-  requestUserList() {
-    this.userService.getUserList(this.query()!).pipe(takeUntil(this.destroy$))
+  requestCarList() {
+    this.carService.getCarList(this.query()!).pipe(takeUntil(this.destroy$))
       .subscribe(
         responseData => {
           this.totalCount.set(responseData.totalCount);
-          this.items.set(responseData.userList);
+          this.items.set(responseData.carList);
         }, errorData => {
           this.toaster.critical(errorData.error);
         });
@@ -82,70 +83,28 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   handlePageClick($event: any) {
     this.pageNumber.set($event);
-    this.requestUserList();
+    this.requestCarList();
   }
 
   handleEditClick($event: any) {
-    this.selectedUser = $event;
-    this.selectedUserId = this.selectedUser.id;
-    this.actionName = `Update user with ID ${this.selectedUserId}`;
+    this.selectedCar = $event;
+    this.selectedCarId = this.selectedCar.id;
+    this.actionName = `Update car with ID ${this.selectedCarId}`;
     this.userAction = RecordAction.UpdateClick;
     this.updateOrDeleteModalInstance.show();
   }
 
   handleDeleteClick($event: any) {
-    this.selectedUserId = $event;
-    this.actionName = `Delete user with ID ${this.selectedUserId}`;
+    this.selectedCarId = $event;
+    this.actionName = `Delete car with ID ${this.selectedCarId}`;
     this.userAction = RecordAction.DeleteClick;
     this.updateOrDeleteModalInstance.show();
   }
 
-  handleUpdateOrDeleteCancelClick() {
-    this.updateOrDeleteModalInstance.hide();
-  }
-
-  handleUpdateOrDeleteConfirmClick() {
-    this.updateOrDeleteModalInstance.hide();
-    switch (this.userAction) {
-      case RecordAction.DeleteClick:
-        this.requestDeleteUser();
-        break;
-      case RecordAction.UpdateClick:
-        this.updateModalInstance.show();
-        this.updateModalContent.load();
-        break;
-    }
-  }
-
-  requestDeleteUser() {
-    this.userService.deleteUser(this.selectedUserId).pipe(takeUntil(this.destroy$))
-      .subscribe(responseData => {
-        this.requestUserList();
-        this.toaster.success("User deleted successfully");
-      }, errorData => {
-        this.toaster.critical(errorData.error);
-      });
-  }
-
-  handleUpdateConfirmClick($event: any) {
-    this.userService.updateUser($event).pipe(takeUntil(this.destroy$))
-      .subscribe(responseData => {
-        this.requestUserList();
-        this.toaster.success("User updated successfully");
-      }, errorData => {
-        this.toaster.critical(errorData.error);
-      });
-    this.updateModalInstance.hide();
-  }
-
-  handleUpdateCancelClick() {
-    this.updateModalInstance.hide();
-  }
-
   handleDownloadFile() {
-    this.userService.getUserExcelFile(this.query()!)
+    this.carService.getCarExcelFile(this.query()!)
       .subscribe(responseData => {
-        const fileName = "users.xlsx";
+        const fileName = "cars.xlsx";
         const blob: Blob = responseData.body as Blob;
         let a = document.createElement("a");
         a.download = fileName!;
@@ -154,5 +113,47 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
       }, errorData => {
         this.toaster.critical(errorData.error);
       });
+  }
+
+  handleUpdateOrDeleteConfirmClick() {
+    this.updateOrDeleteModalInstance.hide();
+    switch (this.userAction) {
+      case RecordAction.DeleteClick:
+        this.requestDeleteCar();
+        break;
+      case RecordAction.UpdateClick:
+        this.updateModalInstance.show();
+        this.updateModalContent.load();
+        break;
+    }
+  }
+
+  handleUpdateOrDeleteCancelClick() {
+    this.updateOrDeleteModalInstance.hide();
+  }
+
+  requestDeleteCar() {
+    this.carService.deleteCar(this.selectedCarId).pipe(takeUntil(this.destroy$))
+      .subscribe(responseData => {
+        this.requestCarList();
+        this.toaster.success("Car deleted successfully");
+      }, errorData => {
+        this.toaster.critical(errorData.error);
+      });
+  }
+
+  handleUpdateConfirmClick($event: any) {
+    this.carService.updateCar($event).pipe(takeUntil(this.destroy$))
+      .subscribe(responseData => {
+        this.requestCarList();
+        this.toaster.success("Car updated successfully");
+      }, errorData => {
+        this.toaster.critical(errorData.error);
+      });
+    this.updateModalInstance.hide();
+  }
+
+  handleUpdateCancelClick() {
+    this.updateModalInstance.hide();
   }
 }

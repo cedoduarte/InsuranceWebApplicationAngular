@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { IGetUserListQuery, IUpdateUserCommand, IUserListResult, IUserViewModel } from '../shared/interfaces';
+import { IGetEntityListQuery, IUpdateUserCommand, IUserListResult, IUserViewModel } from '../shared/interfaces';
 import { HEADERS } from '../shared/constants';
 import { share } from 'rxjs';
 
@@ -22,12 +22,12 @@ export class UserService {
     return this.http.get<IUserViewModel>(`https://localhost:7145/User/${id}`, { headers: HEADERS }).pipe(share());
   }
 
-  getUserList(query: IGetUserListQuery) {
+  getUserList(query: IGetEntityListQuery) {
     const queryString: string = `keyword=${query.keyword}&getAll=${query.getAll}&pageNumber=${query.pageNumber}&pageSize=${query.pageSize}`;
     return this.http.get<IUserListResult>(`https://localhost:7145/User/list?${queryString}`, { headers: HEADERS }).pipe(share());
   }
 
-  getUserExcelFile(query: IGetUserListQuery) {
+  getUserExcelFile(query: IGetEntityListQuery) {
     const queryString: string = `keyword=${query.keyword}&getAll=${query.getAll}&pageNumber=${query.pageNumber}&pageSize=${query.pageSize}`;
     const url: string = `https://localhost:7145/User/excel?${queryString}`;
     return this.http.get(url, {

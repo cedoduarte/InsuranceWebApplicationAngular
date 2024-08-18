@@ -8,6 +8,7 @@ import { CarsComponent } from './pages/cars/cars.component';
 import { InsurancesComponent } from './pages/insurances/insurances.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { UserReadComponent } from './pages/users/crud/user-read/user-read.component';
+import { CarReadComponent } from './pages/cars/crud/car-read/car-read.component';
 
 export const routes: Routes = [    
     {
@@ -35,7 +36,13 @@ export const routes: Routes = [
             },
             {
                 path: "cars",
-                component: CarsComponent
+                component: CarsComponent,
+                children: [
+                    {
+                        path: "car-read",
+                        component: CarReadComponent
+                    }
+                ]
             },
             {
                 path: "insurances",

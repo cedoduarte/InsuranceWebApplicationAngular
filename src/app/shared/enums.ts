@@ -1,4 +1,4 @@
-export enum UserRecordAction {
+export enum RecordAction {
     UpdateClick,
     DeleteClick
 }

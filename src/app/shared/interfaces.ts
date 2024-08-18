@@ -42,7 +42,32 @@ export interface IUpdateUserCommand {
     confirmedPassword: string;
 }
 
-export interface IGetUserListQuery {
+export interface ICarViewModel {
+    id: number;
+    model: string;
+    color: string;
+    price: number;
+    plateNumber: string;
+    lastModified: string;
+    isDeleted: boolean;
+    lastDeleted: string;
+    lastCreated: string;
+}
+
+export interface IUpdateCarCommand {
+    id: number;
+    model: string;
+    color: string;
+    price: number;
+    plateNumber: string;
+}
+
+export interface ICarListResult {
+    totalCount: number;
+    carList: ICarViewModel[];
+}
+
+export interface IGetEntityListQuery {
     keyword: string;
     getAll: boolean;
     pageNumber: number;
