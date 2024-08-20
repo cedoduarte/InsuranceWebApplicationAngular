@@ -5,6 +5,7 @@
             <th scope="col">First name</th>
             <th scope="col">Last name</th>
             <th scope="col">Email</th>
+            <th scope="col">Birthdate</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -15,6 +16,7 @@
             <td>{{item.firstName}}</td>
             <td>{{item.lastName}}</td>
             <td>{{item.email}}</td>
+            <td>{{item.birthdate}}</td>
             <td class="user-read-actions">
                 <span class="user-read-command-button material-icons" (click)="handleEditClick(item)">edit</span>|
                 <span class="user-read-command-button material-icons" (click)="handleDeleteClick(item.id)">delete</span>

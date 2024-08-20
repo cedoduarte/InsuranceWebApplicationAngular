@@ -24,6 +24,11 @@
     text-decoration: underline;        
 }
 
+.signup-birthdate {
+    width: 100%;
+    margin-top: 5px;
+}
+
 @media only screen and (min-width: 768px) {
     .signup-form {
         width: 45vw;

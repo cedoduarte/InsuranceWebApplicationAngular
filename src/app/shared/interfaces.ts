@@ -14,6 +14,7 @@ export interface IUserViewModel {
     firstName: string;
     lastName: string;
     email: string;
+    birthdate: string;
     lastModified: string;
     isDeleted: boolean;
     lastDeleted: string;
@@ -31,6 +32,7 @@ export interface ICreateUserCommand {
     email: string;
     password: string;
     confirmedPassword: string;
+    birthdate: string;
 }
 
 export interface IUpdateUserCommand {
@@ -40,6 +42,7 @@ export interface IUpdateUserCommand {
     email: string;
     password: string;
     confirmedPassword: string;
+    birthdate: string;
 }
 
 export interface ICarViewModel {

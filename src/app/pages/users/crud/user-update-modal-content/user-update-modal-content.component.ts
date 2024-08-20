@@ -2,11 +2,13 @@ import { Component, inject, input, output } from '@angular/core';
 import { IUpdateUserCommand, IUserViewModel } from '../../../../shared/interfaces';
 import { FormsModule } from '@angular/forms';
 import { AppToasterService } from '../../../../services/app-toaster.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-update-modal-content',
   standalone: true,
   imports: [FormsModule],
+  providers: [DatePipe],
   templateUrl: './user-update-modal-content.component.html',
   styleUrl: './user-update-modal-content.component.css'
 })
@@ -21,7 +23,8 @@ export class UserUpdateModalContentComponent {
     lastName: "",
     email: "",
     password: "",
-    confirmedPassword: ""
+    confirmedPassword: "",
+    birthdate: ""
   };
   
   load() {
