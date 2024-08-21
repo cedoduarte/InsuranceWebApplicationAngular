@@ -1,2 +1,2 @@
-npm install bootstrap @ng-bootstrap/ng-bootstrap --forcé
+npm install bootstrap @ng-bootstrap/ng-bootstrap --force
 npm install ngx-color-picker --save --force
