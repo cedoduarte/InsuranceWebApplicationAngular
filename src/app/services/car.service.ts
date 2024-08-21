@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ICarListResult, ICarViewModel, IGetEntityListQuery, IUpdateCarCommand, IUserViewModel } from '../shared/interfaces';
+import { ICarListResult, ICarViewModel, ICreateCarCommand, IGetEntityListQuery, IUpdateCarCommand, IUserViewModel } from '../shared/interfaces';
 import { share } from 'rxjs';
 import { HEADERS } from '../shared/constants';
 
@@ -48,5 +48,9 @@ export class CarService {
       responseType: "blob",
       headers: HEADERS
     }).pipe(share());
+  }
+
+  createCar(command: ICreateCarCommand) {
+    return this.http.post<ICarViewModel>(`https://localhost:7145/Car/create`, command, { headers: HEADERS }).pipe(share());
   }
 }

@@ -59,6 +59,13 @@ export interface ICarViewModel {
     lastCreated: string;
 }
 
+export interface ICreateCarCommand {
+    model: string;
+    color: string;
+    price: number;
+    plateNumber: string;
+}
+
 export interface IUpdateCarCommand {
     id: number;
     model: string;

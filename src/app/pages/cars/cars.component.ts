@@ -15,6 +15,9 @@ export class CarsComponent {
   items: ICrudNavItem[] = [
     {
       text: "Read"
+    },
+    {
+      text: "New"
     }
   ];
 

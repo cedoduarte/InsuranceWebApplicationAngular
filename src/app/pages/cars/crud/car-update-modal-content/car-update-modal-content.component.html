@@ -11,7 +11,7 @@
             </div>
             <div>
                 <label for="color">Color:</label>
-                <input [(ngModel)]="formData.color" name="color" type="text" class="form-control" placeholder="Color" />
+                <input [(colorPicker)]="formData.color" cpOutputFormat="hex" [style.background]="formData.color" name="color" class="form-control" />
             </div>
             <div>
                 <label for="price">Price:</label>

@@ -9,6 +9,7 @@ import { InsurancesComponent } from './pages/insurances/insurances.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { UserReadComponent } from './pages/users/crud/user-read/user-read.component';
 import { CarReadComponent } from './pages/cars/crud/car-read/car-read.component';
+import { CarNewComponent } from './pages/cars/crud/car-new/car-new.component';
 
 export const routes: Routes = [    
     {
@@ -41,6 +42,10 @@ export const routes: Routes = [
                     {
                         path: "car-read",
                         component: CarReadComponent
+                    },
+                    {
+                        path: "car-new",
+                        component: CarNewComponent
                     }
                 ]
             },

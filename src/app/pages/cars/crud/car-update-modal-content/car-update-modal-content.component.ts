@@ -2,11 +2,12 @@ import { Component, inject, input, output } from '@angular/core';
 import { AppToasterService } from '../../../../services/app-toaster.service';
 import { ICarViewModel, IUpdateCarCommand } from '../../../../shared/interfaces';
 import { FormsModule } from '@angular/forms';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @Component({
   selector: 'app-car-update-modal-content',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, ColorPickerModule],
   templateUrl: './car-update-modal-content.component.html',
   styleUrl: './car-update-modal-content.component.css'
 })

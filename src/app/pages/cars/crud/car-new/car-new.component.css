@@ -1,0 +1,17 @@
+.car-new-form {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.car-new-form div {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.car-new-form label {
+    width: 100px;
+}
+
+.car-new-submit-button {
+    margin-top: 5px;
+}

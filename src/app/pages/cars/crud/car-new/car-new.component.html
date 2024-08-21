@@ -1,0 +1,20 @@
+<form class="car-new-form" (submit)="handleSubmit()">
+    <div>
+        <label for="model">Model:</label>
+        <input [(ngModel)]="formData.model" name="model" type="text" class="form-control" placeholder="Model" />
+    </div>
+    <div>
+        <label for="color">Color:</label>
+        <input [(colorPicker)]="formData.color" cpOutputFormat="hex" [style.background]="formData.color" name="color" class="form-control" />
+    </div>
+    <div>
+        <label for="price">Price:</label>
+        <input [(ngModel)]="formData.price" name="price" type="number" class="form-control" placeholder="Price" />
+    </div>
+    <div>
+        <label for="plateNumber">Plate number:</label>
+        <input [(ngModel)]="formData.plateNumber" name="plateNumber" type="text" class="form-control"
+            placeholder="Plate number" />
+    </div>
+    <button class="car-new-submit-button btn btn-primary" type="submit">Add</button>
+</form>
