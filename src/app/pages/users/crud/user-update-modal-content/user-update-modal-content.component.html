@@ -10,6 +10,8 @@
             <input [(ngModel)]="formData.lastName" name="lastName" type="text" class="form-control"
                 placeholder="Last name" />
             <input [(ngModel)]="formData.email" name="email" type="email" class="form-control" placeholder="Email" />
+            <input [(ngModel)]="birthdate" name="birthdate" type="text" class="form-control" placeholder="Birthdate"
+                ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
             <input [(ngModel)]="formData.password" name="password" type="password" class="form-control"
                 placeholder="Password" />
             <input [(ngModel)]="formData.confirmedPassword" name="password" type="password" class="form-control"

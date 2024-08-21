@@ -7,6 +7,7 @@ import { RecordAction } from '../../../../shared/enums';
 import { Subject, takeUntil } from 'rxjs';
 import { QuestionModalContentComponent } from '../../../../components/question-modal-content/question-modal-content.component';
 import { UserUpdateModalContentComponent } from '../user-update-modal-content/user-update-modal-content.component';
+import { formatDate as dateFormatter } from '../../../../shared/utils';
 
 @Component({
   selector: 'app-user-read',
@@ -32,7 +33,8 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
       keyword: "",
       getAll: true,
       pageNumber: this.pageNumber(),
-      pageSize: this.pageSize()
+      pageSize: this.pageSize(),
+      resetCache: this.resetCache()
     }
   });
   destroy$ = new Subject<void>();
@@ -40,11 +42,12 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   pageSize = signal<number>(10);
   pageNumber = signal<number>(1);
   totalCount = signal<number>(0);
+  resetCache = signal<boolean>(false);
   pageCount = computed(() => Math.ceil(this.totalCount() / this.pageSize()));
   items = signal<IUserViewModel[]>([]);
 
   ngOnInit() {
-    this.requestUserList();
+    this.requestUserList(false);
   }
 
   ngAfterViewInit() {
@@ -69,7 +72,8 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateModalInstance = bootstrapModal;
   }
 
-  requestUserList() {
+  requestUserList(resetCache: boolean) {
+    this.resetCache.set(resetCache);
     this.userService.getUserList(this.query()!).pipe(takeUntil(this.destroy$))
       .subscribe(
         responseData => {
@@ -82,7 +86,7 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   handlePageClick($event: any) {
     this.pageNumber.set($event);
-    this.requestUserList();
+    this.requestUserList(false);
   }
 
   handleEditClick($event: any) {
@@ -120,7 +124,7 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   requestDeleteUser() {
     this.userService.deleteUser(this.selectedUserId).pipe(takeUntil(this.destroy$))
       .subscribe(responseData => {
-        this.requestUserList();
+        this.requestUserList(true);
         this.toaster.success("User deleted successfully");
       }, errorData => {
         this.toaster.critical(errorData.error);
@@ -130,7 +134,8 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   handleUpdateConfirmClick($event: any) {
     this.userService.updateUser($event).pipe(takeUntil(this.destroy$))
       .subscribe(responseData => {
-        this.requestUserList();
+        this.updateModalContent.reset();
+        this.requestUserList(true);
         this.toaster.success("User updated successfully");
       }, errorData => {
         this.toaster.critical(errorData.error);
@@ -143,6 +148,7 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   handleDownloadFile() {
+    this.resetCache.set(true);
     this.userService.getUserExcelFile(this.query()!)
       .subscribe(responseData => {
         const fileName = "users.xlsx";
@@ -154,5 +160,9 @@ export class UserReadComponent implements OnInit, AfterViewInit, OnDestroy {
       }, errorData => {
         this.toaster.critical(errorData.error);
       });
+  }
+
+  formatDate(dateString: string) {    
+    return dateFormatter(dateString);
   }
 }

@@ -23,12 +23,25 @@ export class UserService {
   }
 
   getUserList(query: IGetEntityListQuery) {
-    const queryString: string = `keyword=${query.keyword}&getAll=${query.getAll}&pageNumber=${query.pageNumber}&pageSize=${query.pageSize}`;
-    return this.http.get<IUserListResult>(`https://localhost:7145/User/list?${queryString}`, { headers: HEADERS }).pipe(share());
+    const propertyNames = Object.keys(query);
+    let queryString = "";
+    for (let propertyName of propertyNames) {
+      const queryValue: string = `${propertyName}=${query[propertyName]}`;
+      queryString += queryValue + "&";
+    }
+    queryString = queryString.slice(0, -1);
+    const url: string = `https://localhost:7145/User/list?${queryString}`;
+    return this.http.get<IUserListResult>(url, { headers: HEADERS }).pipe(share());
   }
 
   getUserExcelFile(query: IGetEntityListQuery) {
-    const queryString: string = `keyword=${query.keyword}&getAll=${query.getAll}&pageNumber=${query.pageNumber}&pageSize=${query.pageSize}`;
+    const propertyNames = Object.keys(query);
+    let queryString = "";
+    for (let propertyName of propertyNames) {
+      const queryValue: string = `${propertyName}=${query[propertyName]}`;
+      queryString += queryValue + "&";
+    }
+    queryString = queryString.slice(0, -1);
     const url: string = `https://localhost:7145/User/excel?${queryString}`;
     return this.http.get(url, {
       observe: "response",

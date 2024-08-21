@@ -71,10 +71,12 @@ export interface ICarListResult {
 }
 
 export interface IGetEntityListQuery {
+    [key: string]: any;
     keyword: string;
     getAll: boolean;
     pageNumber: number;
     pageSize: number;
+    resetCache: boolean;
 }
 
 export interface ISidebarItem {

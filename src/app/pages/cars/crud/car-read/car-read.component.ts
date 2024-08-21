@@ -33,7 +33,8 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
       keyword: "",
       getAll: true,
       pageNumber: this.pageNumber(),
-      pageSize: this.pageSize()
+      pageSize: this.pageSize(),
+      resetCache: this.resetCache()
     }
   });
   destroy$ = new Subject<void>();
@@ -41,6 +42,7 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
   pageSize = signal<number>(10);
   pageNumber = signal<number>(1);
   totalCount = signal<number>(0);
+  resetCache = signal<boolean>(false);
   pageCount = computed(() => Math.ceil(this.totalCount() / this.pageSize()));
   items = signal<ICarViewModel[]>([]);
 
