@@ -5,13 +5,24 @@
     <div class="modal-body">
         <h4>Update Car with ID {{car()?.id}}</h4>
         <form class="car-update-modal-content-form">
-            <input [(ngModel)]="formData.model" name="model" type="text" class="form-control"
-                placeholder="Model" />
-            <input [(ngModel)]="formData.color" name="color" type="text" class="form-control"
-                placeholder="Color" />
-            <input [(ngModel)]="formData.price" name="price" type="number" class="form-control" placeholder="Price" />
-            <input [(ngModel)]="formData.plateNumber" name="plateNumber" type="text" class="form-control"
-                placeholder="Plate number" />
+            <div>
+                <label for="model">Model:</label>
+                <input [(ngModel)]="formData.model" name="model" type="text" class="form-control" placeholder="Model" />
+            </div>
+            <div>
+                <label for="color">Color:</label>
+                <input [(ngModel)]="formData.color" name="color" type="text" class="form-control" placeholder="Color" />
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input [(ngModel)]="formData.price" name="price" type="number" class="form-control"
+                    placeholder="Price" />
+            </div>
+            <div>
+                <label for="plateNumber">Plate number:</label>
+                <input [(ngModel)]="formData.plateNumber" name="plateNumber" type="text" class="form-control"
+                    placeholder="Plate number" />
+            </div>
         </form>
     </div>
     <div class="modal-footer">

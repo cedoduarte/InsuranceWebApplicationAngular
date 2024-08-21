@@ -1,0 +1,8 @@
+.car-update-modal-content-form div {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.car-update-modal-content-form label {
+    width: 100px;
+}

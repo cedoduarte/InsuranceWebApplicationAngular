@@ -7,7 +7,6 @@ import { ICarViewModel, IGetEntityListQuery } from '../../../../shared/interface
 import { CarService } from '../../../../services/car.service';
 import { RecordAction } from '../../../../shared/enums';
 import { CarUpdateModalContentComponent } from '../car-update-modal-content/car-update-modal-content.component';
-import { UserUpdateModalContentComponent } from '../../../users/crud/user-update-modal-content/user-update-modal-content.component';
 
 @Component({
   selector: 'app-car-read',
@@ -19,7 +18,7 @@ import { UserUpdateModalContentComponent } from '../../../users/crud/user-update
 export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild("updateOrDeleteModal") updateOrDeleteModal!: ElementRef;
   @ViewChild("updateModal") updateModal!: ElementRef;
-  @ViewChild("updateModalContent") updateModalContent!: UserUpdateModalContentComponent;
+  @ViewChild("updateModalContent") updateModalContent!: CarUpdateModalContentComponent;
   updateOrDeleteModalInstance: any;
   updateModalInstance: any;
   userAction!: RecordAction;
@@ -47,7 +46,7 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
   items = signal<ICarViewModel[]>([]);
 
   ngOnInit() {
-    this.requestCarList();
+    this.requestCarList(false);
   }
 
   ngAfterViewInit() {
@@ -72,7 +71,8 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateModalInstance = bootstrapModal;
   }
 
-  requestCarList() {
+  requestCarList(resetCache: boolean) {
+    this.resetCache.set(resetCache);
     this.carService.getCarList(this.query()!).pipe(takeUntil(this.destroy$))
       .subscribe(
         responseData => {
@@ -85,7 +85,7 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   handlePageClick($event: any) {
     this.pageNumber.set($event);
-    this.requestCarList();
+    this.requestCarList(false);
   }
 
   handleEditClick($event: any) {
@@ -137,7 +137,7 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
   requestDeleteCar() {
     this.carService.deleteCar(this.selectedCarId).pipe(takeUntil(this.destroy$))
       .subscribe(responseData => {
-        this.requestCarList();
+        this.requestCarList(true);
         this.toaster.success("Car deleted successfully");
       }, errorData => {
         this.toaster.critical(errorData.error);
@@ -147,7 +147,8 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
   handleUpdateConfirmClick($event: any) {
     this.carService.updateCar($event).pipe(takeUntil(this.destroy$))
       .subscribe(responseData => {
-        this.requestCarList();
+        this.updateModalContent.reset();
+        this.requestCarList(true);
         this.toaster.success("Car updated successfully");
       }, errorData => {
         this.toaster.critical(errorData.error);

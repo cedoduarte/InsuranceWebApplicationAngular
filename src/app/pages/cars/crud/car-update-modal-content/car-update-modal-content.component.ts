@@ -31,6 +31,16 @@ export class CarUpdateModalContentComponent {
     this.formData.plateNumber = this.car()?.plateNumber!;
   }
 
+  reset() {
+    this.formData = {
+      id: -1,
+      model: "",
+      color: "",
+      price: 0.0,
+      plateNumber: ""
+    };
+  }
+
   handleCancelClick() {
     this.cancelClick.emit();
   }
