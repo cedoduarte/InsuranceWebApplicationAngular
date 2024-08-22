@@ -34,7 +34,7 @@ export class CarReadComponent implements OnInit, AfterViewInit, OnDestroy {
       pageNumber: this.pageNumber(),
       pageSize: this.pageSize(),
       resetCache: this.resetCache()
-    }
+    };
   });
   destroy$ = new Subject<void>();
   toaster = inject(AppToasterService);

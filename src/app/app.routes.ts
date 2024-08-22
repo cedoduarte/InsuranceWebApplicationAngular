@@ -10,6 +10,8 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { UserReadComponent } from './pages/users/crud/user-read/user-read.component';
 import { CarReadComponent } from './pages/cars/crud/car-read/car-read.component';
 import { CarNewComponent } from './pages/cars/crud/car-new/car-new.component';
+import { InsuranceReadComponent } from './pages/insurances/crud/insurance-read/insurance-read.component';
+import { InsuranceNewComponent } from './pages/insurances/crud/insurance-new/insurance-new.component';
 
 export const routes: Routes = [    
     {
@@ -51,7 +53,17 @@ export const routes: Routes = [
             },
             {
                 path: "insurances",
-                component: InsurancesComponent
+                component: InsurancesComponent,
+                children: [
+                    {
+                        path: "insurance-read",
+                        component: InsuranceReadComponent
+                    },
+                    {
+                        path: "insurance-new",
+                        component: InsuranceNewComponent
+                    }
+                ]
             }
         ]
     },

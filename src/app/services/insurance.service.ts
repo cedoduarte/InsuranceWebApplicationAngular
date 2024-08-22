@@ -22,7 +22,7 @@ export class InsuranceService {
     return this.http.get<IInsuranceViewModel>(`https://localhost:7145/Insurance/${id}`, { headers: HEADERS }).pipe(share());
   }
   
-  getUserList(query: IGetEntityListQuery) {
+  getInsuranceList(query: IGetEntityListQuery) {
     const propertyNames = Object.keys(query);
     let queryString = "";
     for (let propertyName of propertyNames) {
@@ -34,7 +34,7 @@ export class InsuranceService {
     return this.http.get<IInsuranceListResult>(url, { headers: HEADERS }).pipe(share());
   }
 
-  getUserExcelFile(query: IGetEntityListQuery) {
+  getInsuranceExcelFile(query: IGetEntityListQuery) {
     const propertyNames = Object.keys(query);
     let queryString = "";
     for (let propertyName of propertyNames) {

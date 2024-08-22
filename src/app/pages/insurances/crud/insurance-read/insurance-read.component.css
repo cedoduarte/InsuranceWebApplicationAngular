@@ -1,0 +1,53 @@
+.insurance-read-table {
+    position: relative;
+    top: 20px;
+    margin-left: 10px;
+    width: 95%;
+}
+
+.insurance-read-pagination {
+    position: relative;
+    top: 10px;
+    margin-left: 10px;;
+}
+
+.insurance-read-action {
+    display: flex;
+}
+
+.insurance-read-command-button {
+    display: block;
+    cursor: pointer;
+    width: 25px;
+}
+
+.insurance-read-command-button:hover {
+    background-color: #0d6efd;
+    display: block;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.insurance-read-download-button {
+    position: relative;
+    margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+    .insurance-read-table {
+        width: 5vw;
+    }
+}
+
+@media (min-width: 769px) {
+    .insurance-read-table {
+        width: 70vw;
+    }
+}
+
+@media (min-width: 1000px) {
+    .insurance-read-table {
+        width: 80vw;
+    }
+}
