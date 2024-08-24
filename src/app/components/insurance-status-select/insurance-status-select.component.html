@@ -1,0 +1,8 @@
+<div class="insurance-status-select-container">
+    <label class="insurance-status-select-label" for="status">Status:</label>
+    <select [(ngModel)]="status" class="form-control" (change)="handleChange($event)">
+        @for (option of options; track option) {
+        <option [ngValue]="option.value">{{ option.label }}</option>
+        }
+    </select>
+</div>

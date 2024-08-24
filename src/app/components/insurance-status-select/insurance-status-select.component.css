@@ -1,0 +1,7 @@
+.insurance-status-select-container {
+    display: flex;
+}
+
+.insurance-status-select-label {
+    width: 100px;
+}

@@ -117,6 +117,16 @@ export interface IInsuranceListResult {
     insuranceList: IInsuranceViewModel[];
 }
 
+export interface ICreateInsuranceCommand {
+    userId: number;
+    carId: number;
+    startDate: string;
+    endDate: string;
+    typeOfInsurance: string;
+    premium: number;
+    status: InsuranceStatus;
+}
+
 export interface IGetEntityListQuery {
     [key: string]: any;
     keyword: string;

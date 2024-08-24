@@ -1,1 +1,52 @@
-<p>insurance-new works!</p>
+<form class="insurance-new-form" (submit)="handleSubmit()">
+    <div>
+        <label for="userId">User Id:</label>
+        <input [(ngModel)]="formData.userId" name="userId" type="text"
+            class="insurance-new-select-entity-id form-control" placeholder="User Id" />
+        <button class="btn btn-primary" (click)="handleOpenSelectUserModal()">Select</button>
+    </div>
+    <div>
+        <label for="carId">Car Id:</label>
+        <input [(ngModel)]="formData.carId" name="carId" type="text" class="insurance-new-select-entity-id form-control"
+            placeholder="Car Id" />
+        <button class="btn btn-primary" (click)="handleOpenSelectCarModal()">Select</button>
+    </div>
+    <div>
+        <label for="startDate">Start date:</label>
+        <input [(ngModel)]="startDate" name="startDate" type="text" class="form-control" placeholder="Start date"
+            ngbDatepicker #startDatePicker="ngbDatepicker" (click)="startDatePicker.toggle()" />
+    </div>
+    <div>
+        <label for="endDate">End date:</label>
+        <input [(ngModel)]="endDate" name="endDate" type="text" class="form-control" placeholder="End date"
+            ngbDatepicker #endDatePicker="ngbDatepicker" (click)="endDatePicker.toggle()" />
+    </div>
+    <div>
+        <label for="type">Type of insurance:</label>
+        <input [(ngModel)]="formData.typeOfInsurance" name="type" type="text" class="form-control" placeholder="Type" />
+    </div>
+    <div>
+        <label for="premium">Premium:</label>
+        <input [(ngModel)]="formData.premium" name="premium" type="number" class="form-control" placeholder="Premium" />
+    </div>
+    <app-insurance-status-select (statusChange)="handleStatusChange($event)"></app-insurance-status-select>
+    <button class="insurance-new-submit-button btn btn-primary" type="submit">Add</button>
+</form>
+
+@if (selectUserModalOpen) {
+<div class="insurance-new-select-user-form-modal">
+    <div class="insurance-new-select-user-form-modal-content">
+        <span class="insurance-new-select-user-form-modal-close" (click)="handleCloseSelectUserModal()">&times;</span>
+        <app-user-selector></app-user-selector>
+    </div>
+</div>
+}
+
+@if (selectCarModalOpen) {
+<div class="insurance-new-select-car-form-modal">
+    <div class="insurance-new-select-car-form-modal-content">
+        <span class="insurance-new-select-car-form-modal-close" (click)="handleCloseSelectCarModal()">&times;</span>
+        <app-car-selector></app-car-selector>
+    </div>
+</div>
+}
