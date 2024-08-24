@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { HEADERS } from '../shared/constants';
 import { share } from 'rxjs';
-import { IGetEntityListQuery, IInsuranceListResult, IInsuranceViewModel, IUpdateInsuranceCommand } from '../shared/interfaces';
+import { ICreateInsuranceCommand, IGetEntityListQuery, IInsuranceListResult, IInsuranceViewModel, IUpdateInsuranceCommand } from '../shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +48,9 @@ export class InsuranceService {
       responseType: "blob",
       headers: HEADERS
     }).pipe(share());
+  }
+
+  createInsurance(command: ICreateInsuranceCommand) {
+    return this.http.post<IInsuranceViewModel>(`https://localhost:7145/Insurance/create`, command, { headers: HEADERS }).pipe(share());
   }
 }

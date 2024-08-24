@@ -1,5 +1,5 @@
 import { Component, output } from '@angular/core';
-import { InsuranceStatus } from '../../shared/enums';
+import { InsuranceStatus } from '../../../../../shared/enums';
 import { FormsModule } from '@angular/forms';
 
 @Component({

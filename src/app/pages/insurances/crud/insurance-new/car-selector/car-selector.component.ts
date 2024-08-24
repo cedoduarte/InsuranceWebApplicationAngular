@@ -1,23 +1,24 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { IGetEntityListQuery, IUserViewModel } from '../../shared/interfaces';
-import { AppToasterService } from '../../services/app-toaster.service';
+import { Component, computed, inject, output, signal } from '@angular/core';
+import { CarService } from '../../../../../services/car.service';
 import { Subject, takeUntil } from 'rxjs';
-import { UserService } from '../../services/user-service';
-import { formatDate as dateFormatter } from '../../shared/utils';
-import { PaginationComponent } from '../pagination/pagination.component';
+import { AppToasterService } from '../../../../../services/app-toaster.service';
+import { ICarViewModel, IGetEntityListQuery } from '../../../../../shared/interfaces';
+import { formatDate as dateFormatter } from '../../../../../shared/utils';
+import { PaginationComponent } from '../../../../../components/pagination/pagination.component';
 
 @Component({
-  selector: 'app-user-selector',
+  selector: 'app-car-selector',
   standalone: true,
   imports: [PaginationComponent],
-  templateUrl: './user-selector.component.html',
-  styleUrl: './user-selector.component.css'
+  templateUrl: './car-selector.component.html',
+  styleUrl: './car-selector.component.css'
 })
-export class UserSelectorComponent implements OnInit {
-  userService = inject(UserService);
+export class CarSelectorComponent {
+  carSelect = output<number>();
+  carService = inject(CarService);
   destroy$ = new Subject<void>();
   toaster = inject(AppToasterService);
-  items = signal<IUserViewModel[]>([]);
+  items = signal<ICarViewModel[]>([]);
   pageSize = signal<number>(10);
   pageNumber = signal<number>(1);
   totalCount = signal<number>(0);
@@ -46,13 +47,17 @@ export class UserSelectorComponent implements OnInit {
   }
 
   requestUserList() {
-    this.userService.getUserList(this.query()!).pipe(takeUntil(this.destroy$))
+    this.carService.getCarList(this.query()!).pipe(takeUntil(this.destroy$))
       .subscribe(
         responseData => {
           this.totalCount.set(responseData.totalCount);
-          this.items.set(responseData.userList);
+          this.items.set(responseData.carList);
         }, errorData => {
           this.toaster.critical(errorData.error);
         });
+  }
+
+  handleCarSelect($event: any) {
+    this.carSelect.emit($event);
   }
 }

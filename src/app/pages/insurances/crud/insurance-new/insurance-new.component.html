@@ -34,19 +34,19 @@
 </form>
 
 @if (selectUserModalOpen) {
-<div class="insurance-new-select-user-form-modal">
-    <div class="insurance-new-select-user-form-modal-content">
-        <span class="insurance-new-select-user-form-modal-close" (click)="handleCloseSelectUserModal()">&times;</span>
-        <app-user-selector></app-user-selector>
+<div class="insurance-new-select-entity-form-modal">
+    <div class="insurance-new-select-entity-form-modal-content">
+        <span class="insurance-new-select-entity-form-modal-close" (click)="handleCloseSelectUserModal()">&times;</span>
+        <app-user-selector (userSelect)="handleUserSelect($event)"></app-user-selector>
     </div>
 </div>
 }
 
 @if (selectCarModalOpen) {
-<div class="insurance-new-select-car-form-modal">
-    <div class="insurance-new-select-car-form-modal-content">
-        <span class="insurance-new-select-car-form-modal-close" (click)="handleCloseSelectCarModal()">&times;</span>
-        <app-car-selector></app-car-selector>
+<div class="insurance-new-select-entity-form-modal">
+    <div class="insurance-new-select-entity-form-modal-content">
+        <span class="insurance-new-select-entity-form-modal-close" (click)="handleCloseSelectCarModal()">&times;</span>
+        <app-car-selector (carSelect)="handleCarSelect($event)"></app-car-selector>
     </div>
 </div>
 }

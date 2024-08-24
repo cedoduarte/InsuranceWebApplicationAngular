@@ -4,9 +4,11 @@ import { InsuranceStatus } from '../../../../shared/enums';
 import { FormsModule } from '@angular/forms';
 import { NgbDateStruct, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule, DatePipe } from '@angular/common';
-import { InsuranceStatusSelectComponent } from '../../../../components/insurance-status-select/insurance-status-select.component';
-import { UserSelectorComponent } from '../../../../components/user-selector/user-selector.component';
-import { CarSelectorComponent } from '../../../../components/car-selector/car-selector.component';
+import { UserSelectorComponent } from './user-selector/user-selector.component';
+import { CarSelectorComponent } from './car-selector/car-selector.component';
+import { InsuranceStatusSelectComponent } from './insurance-status-select/insurance-status-select.component';
+import { InsuranceService } from '../../../../services/insurance.service';
+import { AppToasterService } from '../../../../services/app-toaster.service';
 
 @Component({
   selector: 'app-insurance-new',
@@ -31,6 +33,8 @@ export class InsuranceNewComponent {
   endDate!: NgbDateStruct;
   selectUserModalOpen: boolean = false;
   selectCarModalOpen: boolean = false;
+  insuranceService = inject(InsuranceService);
+  toaster = inject(AppToasterService);
 
   handleOpenSelectUserModal() {
     this.selectUserModalOpen = true;
@@ -66,10 +70,25 @@ export class InsuranceNewComponent {
     return true;
   }
 
+  handleUserSelect($event: any) {
+    this.selectUserModalOpen = false;
+    this.formData.userId = $event;
+  }
+
+  handleCarSelect($event: any) {
+    this.selectCarModalOpen = false;
+    this.formData.carId = $event;
+  }
+
   handleSubmit() {
     if (!this.setDates()) {
       return;
     }
-    console.log(this.formData);
+    this.insuranceService.createInsurance(this.formData)
+    .subscribe(responseData => {
+      this.toaster.success("Insurance created successfully");
+    }, errorData => {
+      this.toaster.critical(errorData.error);
+    });
   }
 }

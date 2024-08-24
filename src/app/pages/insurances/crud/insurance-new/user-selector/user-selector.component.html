@@ -1,0 +1,29 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">First name</th>
+            <th scope="col">Last name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Birthdate</th>
+            <th scope="col">Select</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (item of items(); track item) {
+        <tr>
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.firstName}}</td>
+            <td>{{item.lastName}}</td>
+            <td>{{item.email}}</td>
+            <td>{{formatDate(item.birthdate)}}</td>
+            <td>
+                <button class="btn btn-primary" (click)="handleUserSelect(item.id)">Select</button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div>
+    <app-pagination [pageCount]="pageCount()" (pageClicked)="handlePageClick($event)"></app-pagination>
+</div>

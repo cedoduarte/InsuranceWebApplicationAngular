@@ -21,10 +21,8 @@
     margin-top: 10px;
 }
 
-
-
-
-.insurance-new-select-user-form-modal {
+/* modal styles */
+.insurance-new-select-entity-form-modal {
     position: fixed;
     z-index: 1;
     left: 0;
@@ -35,7 +33,7 @@
     background-color: rgba(0, 0, 0, 0.4);
 }
 
-.insurance-new-select-user-form-modal-content {
+.insurance-new-select-entity-form-modal-content {
     background-color: #fefefe;
     margin: 10% auto;
     padding: 20px;
@@ -43,10 +41,11 @@
     width: 80%;
 }
 
-.insurance-new-select-user-form-modal-close {
+.insurance-new-select-entity-form-modal-close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
 }
+/* end modal styles*/
