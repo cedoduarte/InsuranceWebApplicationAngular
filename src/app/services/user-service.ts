@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { IGetEntityListQuery, IUpdateUserCommand, IUserListResult, IUserViewModel } from '../shared/interfaces';
-import { HEADERS } from '../shared/constants';
+import { BASE_API_URL, HEADERS } from '../shared/constants';
 import { share } from 'rxjs';
 
 @Injectable({
@@ -11,15 +11,15 @@ export class UserService {
   http = inject(HttpClient);
 
   deleteUser(id: number) {
-    return this.http.delete<IUserViewModel>(`https://localhost:7145/User/${id}`, { headers: HEADERS }).pipe(share());
+    return this.http.delete<IUserViewModel>(`${BASE_API_URL}/User/${id}`, { headers: HEADERS }).pipe(share());
   }
 
   updateUser(command: IUpdateUserCommand) {
-    return this.http.put<IUserViewModel>("https://localhost:7145/User", command, { headers: HEADERS }).pipe(share());
+    return this.http.put<IUserViewModel>(`${BASE_API_URL}/User`, command, { headers: HEADERS }).pipe(share());
   }
 
   getUserById(id: number) {
-    return this.http.get<IUserViewModel>(`https://localhost:7145/User/${id}`, { headers: HEADERS }).pipe(share());
+    return this.http.get<IUserViewModel>(`${BASE_API_URL}/User/${id}`, { headers: HEADERS }).pipe(share());
   }
 
   getUserList(query: IGetEntityListQuery) {
@@ -30,7 +30,7 @@ export class UserService {
       queryString += queryValue + "&";
     }
     queryString = queryString.slice(0, -1);
-    const url: string = `https://localhost:7145/User/list?${queryString}`;
+    const url: string = `${BASE_API_URL}/User/list?${queryString}`;
     return this.http.get<IUserListResult>(url, { headers: HEADERS }).pipe(share());
   }
 
@@ -42,7 +42,7 @@ export class UserService {
       queryString += queryValue + "&";
     }
     queryString = queryString.slice(0, -1);
-    const url: string = `https://localhost:7145/User/excel?${queryString}`;
+    const url: string = `${BASE_API_URL}/User/excel?${queryString}`;
     return this.http.get(url, {
       observe: "response",
       responseType: "blob",

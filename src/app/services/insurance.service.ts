@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { HEADERS } from '../shared/constants';
+import { BASE_API_URL, HEADERS } from '../shared/constants';
 import { share } from 'rxjs';
 import { ICreateInsuranceCommand, IGetEntityListQuery, IInsuranceListResult, IInsuranceViewModel, IUpdateInsuranceCommand } from '../shared/interfaces';
 
@@ -11,15 +11,15 @@ export class InsuranceService {
   http = inject(HttpClient);
 
   deleteInsurance(id: number) {
-    return this.http.delete<IInsuranceViewModel>(`https://localhost:7145/Insurance/${id}`, { headers: HEADERS }).pipe(share());
+    return this.http.delete<IInsuranceViewModel>(`${BASE_API_URL}/Insurance/${id}`, { headers: HEADERS }).pipe(share());
   }
   
   updateInsurance(command: IUpdateInsuranceCommand) {
-    return this.http.put<IInsuranceViewModel>("https://localhost:7145/Insurance", command, { headers: HEADERS }).pipe(share());
+    return this.http.put<IInsuranceViewModel>(`${BASE_API_URL}/Insurance`, command, { headers: HEADERS }).pipe(share());
   }
 
   getInsuranceById(id: number) {
-    return this.http.get<IInsuranceViewModel>(`https://localhost:7145/Insurance/${id}`, { headers: HEADERS }).pipe(share());
+    return this.http.get<IInsuranceViewModel>(`${BASE_API_URL}/Insurance/${id}`, { headers: HEADERS }).pipe(share());
   }
   
   getInsuranceList(query: IGetEntityListQuery) {
@@ -30,7 +30,7 @@ export class InsuranceService {
       queryString += queryValue + "&";
     }
     queryString = queryString.slice(0, -1);
-    const url: string = `https://localhost:7145/Insurance/list?${queryString}`;
+    const url: string = `${BASE_API_URL}/Insurance/list?${queryString}`;
     return this.http.get<IInsuranceListResult>(url, { headers: HEADERS }).pipe(share());
   }
 
@@ -42,7 +42,7 @@ export class InsuranceService {
       queryString += queryValue + "&";
     }
     queryString = queryString.slice(0, -1);
-    const url: string = `https://localhost:7145/Insurance/excel?${queryString}`;
+    const url: string = `${BASE_API_URL}/Insurance/excel?${queryString}`;
     return this.http.get(url, {
       observe: "response",
       responseType: "blob",
@@ -51,6 +51,6 @@ export class InsuranceService {
   }
 
   createInsurance(command: ICreateInsuranceCommand) {
-    return this.http.post<IInsuranceViewModel>(`https://localhost:7145/Insurance/create`, command, { headers: HEADERS }).pipe(share());
+    return this.http.post<IInsuranceViewModel>(`${BASE_API_URL}/Insurance/create`, command, { headers: HEADERS }).pipe(share());
   }
 }
